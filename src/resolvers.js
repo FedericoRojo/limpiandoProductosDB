@@ -34,10 +34,11 @@ export const resolvers = {
       Product.find(buildQuery(filter))
         .sort({ [sortBy]: order === 'DESC' ? -1 : 1 })
         .skip(Math.max(offset, 0))
-        .limit(Math.min(Math.max(limit, 1), 200)),
+        .limit(Math.min(Math.max(limit, 1), 200))
+        .exec(),
     product: (_, { id }) => {
       assertValidId(id);
-      return Product.findById(id);
+      return Product.findById(id).exec();
     },
     categories: () => Product.distinct('category').exec(),
   },
@@ -52,7 +53,7 @@ export const resolvers = {
       return Product.findByIdAndUpdate(id, { $set: update }, {
         new: true,
         runValidators: true,
-      });
+      }).exec();
     },
     deleteProduct: async (_, { id }) => {
       assertValidId(id);
