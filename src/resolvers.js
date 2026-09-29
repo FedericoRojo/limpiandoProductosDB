@@ -39,7 +39,7 @@ export const resolvers = {
       assertValidId(id);
       return Product.findById(id);
     },
-    categories: () => Product.distinct('category'),
+    categories: () => Product.distinct('category').exec(),
   },
   Mutation: {
     createProduct: (_, { input }) => Product.create(input),
